@@ -1,0 +1,764 @@
+/* css */
+:root[data-theme="light"] {
+    --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f5f7fa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --text-tertiary: #999999;
+    --border-color: #e0e0e0;
+    --focus-color: #667eea;
+    --focus-shadow: rgba(102, 126, 234, 0.1);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 20px rgba(102, 126, 234, 0.4);
+    --input-bg: #ffffff;
+    --success-color: #10b981;
+    --accent-color: #ffd700;
+}
+
+:root[data-theme="dark"] {
+    --bg-primary: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --border-color: #4b5563;
+    --focus-color: #667eea;
+    --focus-shadow: rgba(102, 126, 234, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 20px rgba(102, 126, 234, 0.3);
+    --input-bg: #2d3748;
+    --success-color: #34d399;
+    --accent-color: #ffd700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+.game-container {
+    min-height: 100vh;
+    background: var(--bg-primary);
+    padding: 40px 20px;
+    transition: background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    animation: floatAnimation 20s ease-in-out infinite;
+}
+
+.game-container::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -30%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-30px) translateX(30px); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(30px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fillProgress {
+    from {
+        width: 0%;
+    }
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.toggle-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid var(--text-primary);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: var(--shadow-md);
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle-btn:hover {
+    transform: scale(1.15) rotate(25deg);
+    box-shadow: var(--shadow-lg);
+    animation: wiggle 0.5s ease-in-out;
+}
+
+.toggle-btn:active {
+    transform: scale(0.9) rotate(25deg);
+}
+
+.game-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: bounce-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.game-title {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.game-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    animation: fadeInUp 0.7s ease 0.2s both;
+}
+
+.progress-section {
+    margin-bottom: 40px;
+    animation: slideInUp 0.7s ease 0.2s both;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.progress-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+    letter-spacing: 0.3px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.question-card {
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: var(--shadow-md);
+    animation: bounce-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+}
+
+.question-card:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.question-number {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--focus-color);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.question-emoji {
+    font-size: 32px;
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.question-text {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 40px;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.option-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    background: var(--bg-tertiary);
+    border: 2.5px solid var(--border-color);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.option-btn:nth-child(1) { animation-delay: 0.1s; }
+.option-btn:nth-child(2) { animation-delay: 0.2s; }
+.option-btn:nth-child(3) { animation-delay: 0.3s; }
+.option-btn:nth-child(4) { animation-delay: 0.4s; }
+
+.option-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.option-btn:hover {
+    border-color: var(--focus-color);
+    background: var(--bg-secondary);
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px var(--focus-shadow);
+}
+
+.option-btn:hover::before {
+    left: 100%;
+}
+
+.option-btn.selected {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    border-color: var(--success-color);
+    color: white;
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
+    transform: scale(1.02);
+}
+
+.option-btn.selected .option-letter {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.option-letter {
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    font-weight: 800;
+    color: white;
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.option-btn:hover .option-letter {
+    transform: scale(1.1);
+}
+
+.option-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    text-align: left;
+    flex: 1;
+}
+
+.option-btn.selected .option-text {
+    color: white;
+}
+
+.option-checkmark {
+    font-size: 20px;
+    font-weight: 800;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.option-btn.selected .option-checkmark {
+    opacity: 1;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 32px;
+    animation: slideInUp 0.7s ease 0.5s both;
+}
+
+.next-btn,
+.submit-btn {
+    padding: 16px 40px;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+    min-width: 200px;
+}
+
+.next-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.next-btn::before,
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: left 0.4s ease;
+}
+
+.next-btn:hover:not(:disabled),
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.05);
+}
+
+.next-btn:hover:not(:disabled)::before,
+.submit-btn:hover:not(:disabled)::before {
+    left: 100%;
+}
+
+.next-btn:active:not(:disabled),
+.submit-btn:active:not(:disabled) {
+    transform: translateY(-2px) scale(0.98);
+}
+
+.next-btn:disabled,
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.quiz-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    animation: slideInUp 0.7s ease 0.6s both;
+}
+
+.stat-item {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--focus-color);
+    letter-spacing: -0.5px;
+}
+
+/* Loading State */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-text {
+    color: white;
+    font-size: 18px;
+    margin-top: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+/* Empty State */
+.empty-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.empty-state {
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    max-width: 500px;
+    animation: bounce-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 10;
+}
+
+.empty-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.empty-description {
+    font-size: 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 20px 16px;
+        padding-top: 100px;
+    }
+
+    .theme-toggle {
+        top: 16px;
+        right: 16px;
+    }
+
+    .toggle-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        border-width: 2px;
+    }
+
+    .game-header {
+        margin-bottom: 32px;
+    }
+
+    .game-title {
+        font-size: 36px;
+    }
+
+    .game-subtitle {
+        font-size: 14px;
+    }
+
+    .progress-section {
+        margin-bottom: 32px;
+    }
+
+    .progress-text {
+        font-size: 14px;
+    }
+
+    .question-card {
+        padding: 32px 24px;
+        border-radius: 20px;
+    }
+
+    .question-text {
+        font-size: 22px;
+        margin-bottom: 32px;
+    }
+
+    .question-header {
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+    }
+
+    .question-emoji {
+        font-size: 28px;
+    }
+
+    .options-container {
+        gap: 14px;
+        margin-bottom: 32px;
+    }
+
+    .option-btn {
+        padding: 16px 20px;
+    }
+
+    .option-letter {
+        min-width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .option-text {
+        font-size: 15px;
+    }
+
+    .next-btn,
+    .submit-btn {
+        padding: 14px 32px;
+        font-size: 15px;
+        min-width: 160px;
+    }
+
+    .quiz-stats {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .stat-item {
+        padding: 20px;
+    }
+
+    .stat-value {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 16px;
+        padding-top: 90px;
+    }
+
+    .game-title {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+
+    .game-subtitle {
+        font-size: 12px;
+    }
+
+    .game-header {
+        margin-bottom: 24px;
+    }
+
+    .progress-section {
+        margin-bottom: 24px;
+    }
+
+    .progress-text {
+        font-size: 12px;
+    }
+
+    .progress-bar {
+        height: 8px;
+    }
+
+    .question-card {
+        padding: 24px 16px;
+        border-radius: 16px;
+    }
+
+    .question-text {
+        font-size: 18px;
+        margin-bottom: 24px;
+    }
+
+    .question-header {
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+    }
+
+    .question-number {
+        font-size: 12px;
+    }
+
+    .question-emoji {
+        font-size: 24px;
+    }
+
+    .options-container {
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .option-btn {
+        padding: 14px 16px;
+        font-size: 14px;
+    }
+
+    .option-letter {
+        min-width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .option-text {
+        font-size: 13px;
+    }
+
+    .next-btn,
+    .submit-btn {
+        padding: 12px 24px;
+        font-size: 14px;
+        min-width: 140px;
+    }
+
+    .action-buttons {
+        gap: 12px;
+    }
+
+    .quiz-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .stat-item {
+        padding: 16px;
+    }
+
+    .stat-value {
+        font-size: 24px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+}

@@ -1,0 +1,477 @@
+/* css */
+:root[data-theme="light"] {
+    --bg-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f5f7fa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --text-tertiary: #999999;
+    --border-color: #e0e0e0;
+    --focus-color: #667eea;
+    --focus-shadow: rgba(102, 126, 234, 0.1);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 20px rgba(102, 126, 234, 0.4);
+    --input-bg: #ffffff;
+    --success-color: #10b981;
+    --accent-color: #ffd700;
+}
+
+:root[data-theme="dark"] {
+    --bg-primary: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --bg-secondary: #1f2937;
+    --bg-tertiary: #374151;
+    --text-primary: #f3f4f6;
+    --text-secondary: #d1d5db;
+    --text-tertiary: #9ca3af;
+    --border-color: #4b5563;
+    --focus-color: #667eea;
+    --focus-shadow: rgba(102, 126, 234, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 20px rgba(102, 126, 234, 0.3);
+    --input-bg: #2d3748;
+    --success-color: #34d399;
+    --accent-color: #ffd700;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+.add-question-container {
+    min-height: 100vh;
+    background: var(--bg-primary);
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.add-question-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    animation: floatAnimation 20s ease-in-out infinite;
+}
+
+.add-question-container::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -30%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-30px) translateX(30px); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes bounce-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translateY(30px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+}
+
+@keyframes star-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1) rotate(0deg) translateY(-100px);
+    }
+}
+
+.theme-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.toggle-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid var(--text-primary);
+    background: var(--bg-secondary);
+    cursor: pointer;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: var(--shadow-md);
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toggle-btn:hover {
+    transform: scale(1.15) rotate(25deg);
+    box-shadow: var(--shadow-lg);
+    animation: wiggle 0.5s ease-in-out;
+}
+
+.toggle-btn:active {
+    transform: scale(0.9) rotate(25deg);
+}
+
+.form-card {
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    box-shadow: var(--shadow-md);
+    padding: 48px;
+    max-width: 500px;
+    width: 100%;
+    animation: bounce-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 10;
+    transition: all 0.4s ease;
+    border: 2px solid transparent;
+}
+
+.form-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 32px;
+    text-align: center;
+    animation: bounce-in 0.7s ease 0.1s both;
+    letter-spacing: -0.5px;
+}
+
+.form-group {
+    margin-bottom: 28px;
+    animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
+}
+
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+
+.form-group:hover {
+    transform: translateX(2px);
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.form-group:hover .form-label {
+    color: var(--focus-color);
+    transform: translateX(2px);
+}
+
+.form-select,
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2.5px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: inherit;
+    background: var(--input-bg);
+    color: var(--text-primary);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.form-select,
+.form-input,
+.form-textarea {
+    box-sizing: border-box;
+}
+
+.form-select:hover,
+.form-input:hover,
+.form-textarea:hover {
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+    transform: scale(1.01);
+}
+
+.form-select:focus,
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 4px var(--focus-shadow);
+    transform: scale(1.02) translateY(-2px);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 110px;
+    font-size: 14px;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.option-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+.option-number {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50%;
+    font-weight: 800;
+    flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.option-input-wrapper:hover .option-number {
+    transform: scale(1.15) rotate(10deg);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+    animation: wiggle 0.4s ease-in-out;
+}
+
+.option-input-wrapper:nth-child(1) { animation-delay: 0.1s; }
+.option-input-wrapper:nth-child(2) { animation-delay: 0.2s; }
+.option-input-wrapper:nth-child(3) { animation-delay: 0.3s; }
+.option-input-wrapper:nth-child(4) { animation-delay: 0.4s; }
+
+.option-input-wrapper .form-input {
+    flex: 1;
+}
+
+.option-input-wrapper:hover .form-input {
+    border-color: var(--focus-color);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    animation: bounce-in 0.7s ease 0.6s both;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: left 0.4s ease;
+    z-index: 1;
+}
+
+.btn-submit:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
+}
+
+.btn-submit:hover::before {
+    left: 100%;
+}
+
+.btn-submit:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+.btn-submit span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Star animation burst on success (add this for future use) */
+.star-burst {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.star-burst::before {
+    content: '⭐';
+    position: absolute;
+    animation: star-pop 1s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-question-container {
+        padding: 20px 16px;
+        align-items: flex-start;
+        padding-top: 120px;
+    }
+
+    .theme-toggle {
+        top: 16px;
+        right: 16px;
+    }
+
+    .toggle-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        border-width: 2px;
+    }
+
+    .form-card {
+        padding: 32px;
+        max-width: 480px;
+        border-radius: 20px;
+    }
+
+    .form-title {
+        font-size: 26px;
+        margin-bottom: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-label {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .form-select,
+    .form-input,
+    .form-textarea {
+        padding: 12px 14px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    .option-number {
+        width: 34px;
+        height: 34px;
+        font-size: 14px;
+    }
+
+    .btn-submit {
+        padding: 14px;
+        font-size: 14px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .add-question-container {
+        padding: 16px;
+        padding-top: 100px;
+    }
+
+    .form-card {
+        padding: 24px;
+        max-width: 100%;
+    }
+
+    .form-title {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-select,
+    .form-input,
+    .form-textarea {
+        padding: 11px 12px;
+        font-size: 13px;
+    }
+
+    .options-container {
+        gap: 10px;
+    }
+
+    .option-number {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+}
