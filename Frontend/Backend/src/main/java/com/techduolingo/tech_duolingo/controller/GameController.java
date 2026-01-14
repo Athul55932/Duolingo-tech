@@ -35,10 +35,10 @@ public class GameController {
         Collections.shuffle(questions);
         return questions.stream().limit(10).toList();
     }
-    // ✅ Fetch score of a specific user
+    // Fetch score of a specific user
     @GetMapping("/score/{username}") public Map<String, Object> getUserScore(@PathVariable String username) { User user = userRepository.findByName(username) .orElseThrow(() -> new RuntimeException("User not found")); Map<String, Object> response = new HashMap<>(); response.put("userId", user.getId()); response.put("name", user.getName()); response.put("score", user.getScore()); return response; }
 
-    // ✅ Fetch scores of all users
+    // Fetch scores of all users
     @GetMapping("/scores")
     public List<Map<String, Object>> getAllUserScores() {
         List<User> users = userRepository.findAll();

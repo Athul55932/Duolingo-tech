@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Courses from "./pages/Courses";
 import Game from "./pages/ Game";   // removed extra space
 import Result from "./pages/Result";
+
 import { AuthProvider } from "./context/AuthContext";
 
 // Admin pages

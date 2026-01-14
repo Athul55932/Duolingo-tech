@@ -182,12 +182,26 @@ function Result() {
                     </div>
                 </div>
 
+                // javascript
                 {/* Progress Breakdown */}
                 <div className="progress-breakdown">
                     <h3 className="breakdown-title">Performance Breakdown</h3>
                     <div className="breakdown-bar">
-                        <div className="breakdown-correct" style={{ width: `${(correctAnswers / totalQuestions) * 100}%` }}>
-                            <span className="breakdown-label">{correctAnswers} Correct</span>
+                        <div
+                            className="breakdown-correct"
+                            style={{ width: `${(correctAnswers / totalQuestions) * 100}%` }}
+                        >
+                            {(correctAnswers / totalQuestions) * 100 > 15 && (
+                                <span className="breakdown-label">{correctAnswers} Correct</span>
+                            )}
+                        </div>
+                        <div
+                            className="breakdown-wrong"
+                            style={{ width: `${(wrongAnswers / totalQuestions) * 100}%` }}
+                        >
+                            {(wrongAnswers / totalQuestions) * 100 > 15 && (
+                                <span className="breakdown-label">{wrongAnswers} Wrong</span>
+                            )}
                         </div>
                     </div>
                     <div className="breakdown-stats">
@@ -205,6 +219,7 @@ function Result() {
                         </div>
                     </div>
                 </div>
+
 
                 {/* Suggestions */}
                 <div className="suggestions-container">
